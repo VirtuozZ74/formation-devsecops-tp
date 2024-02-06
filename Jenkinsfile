@@ -34,6 +34,17 @@ pipeline {
    	      }
 	      }
 
+      stage('Vulnerability Scan - Docker Trivy') {
+          steps {
+//--------------------------replace variable  token_github on file trivy-image-scan.sh
+            withCredentials([string(credentialsId: 'Trivy-Scan-Theo', variable: 'TOKEN')]) {
+      sh "sed -i 's#Trivy-Scan-Theo#${TOKEN}#g' trivy-scan-theo.sh"      
+      sh "sudo bash trivy-scan-theo.sh"
+            }
+          }
+        }
+
+       }
 
     }
 }
