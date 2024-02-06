@@ -49,5 +49,18 @@ pipeline {
           }
         }
 
+      stage('Docker Build and Push') {
+  	      steps {
+    	      withCredentials([string(credentialsId: 'Docker-Hub-Pass-Théo', variable: 'DOCKER_HUB_PASSWORD')]) {
+      	        sh 'sudo docker login -u virtu0zz -p $DOCKER_HUB_PASSWORD'
+              	sh 'printenv'
+      	        sh 'sudo docker build -t virtu0zz/hello-word:""$GIT_COMMIT"" .'
+      	        sh 'sudo docker push virtu0zz/hello-word:""$GIT_COMMIT""'
+        	}
+
+  	}
+	}
+
+
     }
 }
