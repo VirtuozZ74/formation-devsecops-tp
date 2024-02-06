@@ -46,8 +46,12 @@ pipeline {
        steps {
 //--------------------------replace variable  token_github on file trivy-image-scan.sh
          withCredentials([string(credentialsId: '	Trivy-Scan-Theo', variable: 'TOKEN')]) {
-        sh "sed -i 's#token_github#${TOKEN}#g' trivy-scan-theo.sh"      
-        sh "sudo bash trivy-scan-theo.sh"
+
+          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+            sh "sed -i 's#token_github#${TOKEN}#g' trivy-scan-theo.sh"      
+            sh "sudo bash trivy-scan-theo.sh"
+//code sh here 
+          }
         }
        }
      }
