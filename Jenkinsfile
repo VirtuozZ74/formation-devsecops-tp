@@ -40,7 +40,7 @@ pipeline {
             withCredentials([string(credentialsId: 'Trivy-Scan-Theo', variable: 'TOKEN')]) {
 
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                  sh "sed -i 's#Trivy-Scan-Theo#${TOKEN}#g' trivy-scan-theo.sh"      
+                  sh "sed -i 's#token_github#${TOKEN}#g' trivy-scan-theo.sh"      
                   sh "sudo bash trivy-scan-theo.sh"
 //code sh here 
                 }
