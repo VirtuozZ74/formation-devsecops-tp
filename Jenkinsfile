@@ -55,6 +55,22 @@ pipeline {
         }
        }
      }
+
+  stage('SonarQube Analysis - SAST') {
+       steps {
+
+         withSonarQubeEnv('SonarQube') {
+
+              mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=Jenkins-pipeline-theo \
+                -Dsonar.projectName='Jenkins-pipeline-theo' \
+                -Dsonar.host.url=http://127.0.0.1:9020 \
+                -Dsonar.token=sqp_e4c47f31ab31a3c3e1db397eab10dcfe202a093c
+
+          }
+        }
+       }
+
  
       stage('Docker Build and Push') {
     steps {
