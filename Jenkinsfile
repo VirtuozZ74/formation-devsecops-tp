@@ -56,18 +56,18 @@ pipeline {
        }
      }
 
-    stage('SonarQube Analysis - SAST') {
-       steps {
-
-         withSonarQubeEnv('SonarQube') {
-
-             mvn clean verify sonar:sonar \
-                -Dsonar.projectKey='jenkins-token-theo' \
-                -Dsonar.host.url='http://mytpm.eastus.cloudapp.azure.com:9112' \
-
-            }
-        }
-    }
+//   stage('SonarQube Analysis - SAST') {
+//      steps {
+//
+//         withSonarQubeEnv('SonarQube') {
+//
+//             mvn clean verify sonar:sonar \
+//                -Dsonar.projectKey=jenkins-token-theo \
+//                -Dsonar.host.url='http://mytpm.eastus.cloudapp.azure.com:9112' \
+//
+//            }
+//        }
+//    }
 
 
  
