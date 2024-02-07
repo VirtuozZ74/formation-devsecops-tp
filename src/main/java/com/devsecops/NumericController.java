@@ -26,7 +26,7 @@ public class NumericController {
 
 		@GetMapping("/")
 		public String welcome() {
-			return "Kubernetes DevSecOps";
+			return "Kubernetes DevSecOps Théo";
 		}
 
 		@GetMapping("/compare/{value}")
