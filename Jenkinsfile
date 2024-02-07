@@ -62,10 +62,10 @@ pipeline {
          withSonarQubeEnv('SonarQube') {
 
              mvn clean verify sonar:sonar \
-                -Dsonar.projectKey=theo-jenkins-pipeline \
-                -Dsonar.projectName=theo-jenkins-pipeline \
-                -Dsonar.host.url=http://127.0.0.1:9020 \
-                -Dsonar.token=sqp_3645cfa3383be4ebe1f4800e5fbc85fa6a992e59
+                -Dsonar.projectKey=jenkins-token-theo \
+                -Dsonar.projectName='jenkins-token-theo' \
+                -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
+                -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad
 
             }
           }
