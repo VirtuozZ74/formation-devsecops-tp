@@ -2,34 +2,34 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: devsecops 
-  name: devsecops Théo
+    app: devsecops-theo 
+  name: devsecops-theo
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: devsecops
+      app: devsecops-theo
   strategy: {}
   template:
     metadata:
       labels:
-        app: devsecops
+        app: devsecops-theo
     spec:
       containers:
       - image: replace
-        name: devsecops-container
+        name: devsecops-theo-container
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: devsecops
-  name: devsecops-svc Théo
+    app: devsecops-theo
+  name: devsecops-theo-svc
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
-    app: devsecops
+    app: devsecops-theo
   type: NodePort
