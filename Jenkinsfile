@@ -56,7 +56,7 @@ pipeline {
        }
      }
 
-  stage('SonarQube Analysis - SAST') {
+    stage('SonarQube Analysis - SAST') {
        steps {
 
          withSonarQubeEnv('SonarQube') {
@@ -69,26 +69,26 @@ pipeline {
 
           }
         }
-       }
+      }
 
  
       stage('Docker Build and Push') {
-    steps {
-      withCredentials([string(credentialsId: 'Docker-Hub-Pass-Théo', variable: 'DOCKER_HUB_PASSWORD')]) {
-        sh 'sudo docker login -u virtu0zz -p $DOCKER_HUB_PASSWORD'
-        sh 'printenv'
-        sh 'sudo docker build -t virtu0zz/hello-word-theo:""$GIT_COMMIT"" .'
-        sh 'sudo docker push virtu0zz/hello-word-theo:""$GIT_COMMIT""'
+         steps {
+          withCredentials([string(credentialsId: 'Docker-Hub-Pass-Théo', variable: 'DOCKER_HUB_PASSWORD')]) {
+             sh 'sudo docker login -u virtu0zz -p $DOCKER_HUB_PASSWORD'
+             sh 'printenv'
+             sh 'sudo docker build -t virtu0zz/hello-word-theo:""$GIT_COMMIT"" .'
+             sh 'sudo docker push virtu0zz/hello-word-theo:""$GIT_COMMIT""'
       }
  
     }
   }
  
       stage('Deployment Kubernetes  ') {
-    steps {
-      withKubeConfig([credentialsId: 'kubeconfig']) {
-            sh "sed -i 's#replace#virtu0zz/hello-word-theo:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
-            sh "kubectl apply -f k8s_deployment_service.yaml"
+         steps {
+             withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "sed -i 's#replace#virtu0zz/hello-word-theo:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+               sh "kubectl apply -f k8s_deployment_service.yaml"
           }
       }
  
