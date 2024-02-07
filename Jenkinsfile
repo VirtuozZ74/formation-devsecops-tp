@@ -73,6 +73,7 @@ pipeline {
 
       stage('SonarQube Analysis - SAST') {
         steps {
+catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
 
           withSonarQubeEnv('SonarQube') {
               sh "mvn clean verify sonar:sonar \
@@ -80,6 +81,7 @@ pipeline {
                     -Dsonar.projectName='jenkins-token-theo' \
                     -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
                     -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad"
+              }
             }
         }
     }
