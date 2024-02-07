@@ -64,7 +64,7 @@ pipeline {
              mvn clean verify sonar:sonar \
                 -Dsonar.projectKey=theo-jenkins-pipeline \
                 -Dsonar.projectName='theo-jenkins-pipeline' \
-                -Dsonar.host.url=http://127.0.0.1:9020 \
+                -Dsonar.host.url='http://127.0.0.1:9020' \
                 -Dsonar.token=sqp_3645cfa3383be4ebe1f4800e5fbc85fa6a992e59
 
           }
