@@ -39,18 +39,30 @@ pipeline {
       }
  
  
- 
+      stage('SonarQube - SAST') {
+       steps {
+         withSonarQubeEnv('SonarQubeConfig') {
+           sh "mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=jenkins-token-theo \
+                    -Dsonar.projectName='jenkins-token-theo' \
+                    -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
+                    -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad"
+         }
+         timeout(time: 2, unit: 'MINUTES') {
+           script {
+             waitForQualityGate abortPipeline: true
+           }
+         }
+       }
+     }
  
  
     stage('Vulnerability Scan - Docker Trivy') {
        steps {
-//--------------------------replace variable  token_github on file trivy-image-scan.sh
-         withCredentials([string(credentialsId: '	Trivy-Scan-Theo', variable: 'TOKEN')]) {
-
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-            sh "sed -i 's#token_github#${TOKEN}#g' trivy-scan-theo.sh"      
-            sh "sudo bash trivy-scan-theo.sh"
-//code sh here 
+              withCredentials([string(credentialsId: '	Trivy-Scan-Theo', variable: 'TOKEN')]) {
+		  	catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+               sh "sed -i 's#token_github#${TOKEN}#g' trivy-scan-theo.sh"      
+               sh "sudo bash trivy-scan-theo.sh" 
           }
         }
        }
@@ -63,28 +75,28 @@ pipeline {
 			        sh "mvn dependency-check:check"
     	   }
    	  }
-   	      post {
-  	        always {
-   			      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-   			 }
-   	 }
+//   	      post {
+//  	        always {
+//   			      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+//   			 }
+//   	 }
  }
 
 
-      stage('SonarQube Analysis - SAST') {
-        steps {
-catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-
-          withSonarQubeEnv('SonarQube') {
-              sh "mvn clean verify sonar:sonar \
-                    -Dsonar.projectKey=jenkins-token-theo \
-                    -Dsonar.projectName='jenkins-token-theo' \
-                    -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
-                    -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad"
-              }
-            }
-        }
-    }
+//      stage('SonarQube Analysis - SAST') {
+//        steps {
+//           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+//
+//          withSonarQubeEnv('SonarQube') {
+//              sh "mvn clean verify sonar:sonar \
+//                    -Dsonar.projectKey=jenkins-token-theo \
+//                    -Dsonar.projectName='jenkins-token-theo' \
+//                    -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
+//                    -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad"
+//              }
+//            }
+//        }
+//    }
 
 
  
@@ -100,15 +112,6 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
     }
   }
  
-      stage('Deployment Kubernetes  ') {
-         steps {
-             withKubeConfig([credentialsId: 'kubeconfig']) {
-              sh "sed -i 's#replace#virtu0zz/hello-word-theo:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
-               sh "kubectl apply -f k8s_deployment_service.yaml"
-          }
-      }
- 
-    }
  
       stage('Vulnerability Scan - Kubernetes') {
    	      steps {
@@ -122,10 +125,20 @@ catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
        	      "Trivy Scan": {
          	    sh "sudo bash trivy-k8s-scan.sh"
        	}
-     	)
-   	}
+     	    )
+   	  }
  	}
  
  
+    stage('Deployment Kubernetes  ') {
+         steps {
+             withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "sed -i 's#replace#virtu0zz/hello-word-theo:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+               sh "kubectl apply -f k8s_deployment_service.yaml"
+          }
+       }
+ 
+     }
+
     }
 }
