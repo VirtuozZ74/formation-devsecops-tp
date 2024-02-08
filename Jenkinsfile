@@ -107,7 +107,7 @@ pipeline {
     }
   }
  
-      stage('Vulnerability Scan - Kubernetes') {
+           stage('Vulnerability Scan - Kubernetes') {
            steps {
              parallel(
                "OPA Scan": {
