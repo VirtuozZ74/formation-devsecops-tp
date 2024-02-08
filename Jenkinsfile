@@ -75,13 +75,12 @@ pipeline {
 			        sh "mvn dependency-check:check"
     	   }
    	  }
-//   	      post {
-//  	        always {
-//   			      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-//   			 }
-//   	 }
+   	      post {
+  	        always {
+   			      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+   			 }
+   	 }
  }
-
 
 //      stage('SonarQube Analysis - SAST') {
 //        steps {
@@ -112,22 +111,21 @@ pipeline {
     }
   }
  
- 
       stage('Vulnerability Scan - Kubernetes') {
-   	      steps {
-     	      parallel(
-       	      "OPA Scan": {
-         	    sh 'sudo docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
-       	},
-       	      "Kubesec Scan": {
-         	    sh "sudo bash kubesec-scan.sh"
-       	},
-       	      "Trivy Scan": {
-         	    sh "sudo bash trivy-k8s-scan.sh"
-       	}
-     	    )
-   	  }
- 	}
+           steps {
+             parallel(
+               "OPA Scan": {
+                 sh 'sudo docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
+               },
+               "Kubesec Scan": {
+                 sh "sudo bash kubesec-scan.sh"
+               },
+               "Trivy Scan": {
+                 sh "sudo bash trivy-k8s-scan.sh"
+               }
+             )
+           }
+         }
  
  
     stage('Deployment Kubernetes  ') {
