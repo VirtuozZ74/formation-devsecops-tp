@@ -1,6 +1,4 @@
 fileignoreconfig:
-- filename: formation-devsecops-tp
-  checksum: 2f8ec4f556d1b4a393e1f00754e973bce52dfb3e4eec7490e2a80a8c58a2c708
 - filename: Jenkinsfile
-  checksum: b5c6a58c94743fabc650f2f0cbb9a4e8f81191e6019ccd70653f2194683b97a6
+  checksum: cd0247dcd960f49acd1cf1ca3ab7ca0d1f949d9ce12288ab2b913784728d8e7e
 version: ""
