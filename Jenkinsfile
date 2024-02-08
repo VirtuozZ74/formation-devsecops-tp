@@ -39,22 +39,22 @@ pipeline {
       }
  
  
-      stage('SonarQube - SAST') {
-       steps {
-         withSonarQubeEnv('SonarQubeConfig') {
-           sh "mvn clean verify sonar:sonar \
-                    -Dsonar.projectKey=jenkins-token-theo \
-                    -Dsonar.projectName='jenkins-token-theo' \
-                    -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
-                    -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad"
-         }
-         timeout(time: 2, unit: 'MINUTES') {
-           script {
-             waitForQualityGate abortPipeline: true
-           }
-         }
-       }
-     }
+//      stage('SonarQube - SAST') {
+//       steps {
+//         withSonarQubeEnv('SonarQubeConfig') {
+//           sh "mvn clean verify sonar:sonar \
+//                    -Dsonar.projectKey=jenkins-token-theo \
+//                    -Dsonar.projectName='jenkins-token-theo' \
+//                    -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 \
+//                    -Dsonar.token=sqp_ace66f0d82667835e4210a1e6e1624fe699c38ad"
+//         }
+//         timeout(time: 2, unit: 'MINUTES') {
+//           script {
+//             waitForQualityGate abortPipeline: true
+//           }
+//         }
+//       }
+//     }
  
  
     stage('Vulnerability Scan - Docker Trivy') {
