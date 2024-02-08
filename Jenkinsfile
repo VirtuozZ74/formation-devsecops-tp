@@ -5,7 +5,7 @@ pipeline {
     deploymentName = "devsecops-theo"
     containerName = "devsecops-theo-container"
     serviceName = "devsecops-theo-svc"
-    imageName = "virtu0zz/hello-world:${GIT_COMMIT}"
+    imageName = "virtu0zz/hello-word:${GIT_COMMIT}"
     applicationURL="http://mytpm.eastus.cloudapp.azure.com"
     applicationURI="/increment/99"
 
@@ -131,7 +131,7 @@ pipeline {
            }
          }
  
- 
+
     stage('Deployment Kubernetes  ') {
          steps {
              withKubeConfig([credentialsId: 'kubeconfig']) {
