@@ -1,11 +1,15 @@
 pipeline {
   agent any
 
-
+  environment {
+    deploymentName = "devsecops-theo"
+    containerName = "devsecops-theo-container"
+    serviceName = "devsecops-theo-svc"
+    imageName = "virtu0zz/hello-world:${GIT_COMMIT}"
+    applicationURL="http://mytpm.eastus.cloudapp.azure.com"
+    applicationURI="/increment/99"
 
   stages {
-     
- 
  
     stage('Build Artifact') {
             steps {
@@ -141,6 +145,9 @@ pipeline {
          }
        }
      }
+
+
+
 
     }
 }
