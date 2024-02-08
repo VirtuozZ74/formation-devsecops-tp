@@ -1,6 +1,4 @@
 fileignoreconfig:
-- filename: Jenkinsfile
-  checksum: d18c6a89bd6e17e41da9caf419e06ce51e65a30dda46bebf0daaa9fe1d909743
 - filename: zap.sh
-  checksum: 83a4f5e269a62847a8a6693916679fd87352acec0d55945b747758c8d15e9847
+  checksum: 2efd5328213467f7b1fa1048d89053ecd5be47840c75e3dc0f069ea7ccadb3ed
 version: ""
