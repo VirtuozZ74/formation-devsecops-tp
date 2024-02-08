@@ -9,6 +9,8 @@ pipeline {
     applicationURL="http://mytpm.eastus.cloudapp.azure.com"
     applicationURI="/increment/99"
 
+  }
+
   stages {
  
     stage('Build Artifact') {
@@ -128,6 +130,7 @@ pipeline {
              )
            }
          }
+ 
  
     stage('Deployment Kubernetes  ') {
          steps {
