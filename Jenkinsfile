@@ -42,10 +42,7 @@ pipeline {
       stage('SonarQube - SAST') {
        steps {
          withSonarQubeEnv('SonarQubeConfig') {
-           sh "mvn clean verify sonar:sonar \
-                    -Dsonar.projectKey=jenkins-token-theo \
-                    -Dsonar.projectName='jenkins-token-theo' \
-                    -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9112 " \
+           sh "mvn sonar:sonar -Dsonar.projectKey=sonarqube_theo -Dsonar.projectName=sonarqube_theo -Dsonar.host.url=http://mytpm.eastus.cloudapp.azure.com:9999" 
          }
          timeout(time: 2, unit: 'MINUTES') {
            script {
