@@ -1,13 +1,10 @@
 #!/bin/bash
 #integration-test.sh
-sleep 5s
-PORT=$(kubectl -n default get svc ${serviceName} -o json | jq .spec.ports[].nodePort)
-echo $PORT
-echo $applicationURL:$PORT/$applicationURI
-if [[ ! -z "$PORT" ]];
+
+if [[ ! -z "30619" ]];
 then
-    response=$(curl -s $applicationURL:$PORT$applicationURI)
-    http_code=$(curl -s -o /dev/null -w "%{http_code}" $applicationURL:$PORT$applicationURI)
+    response=$(curl -s http://mytpm.eastus.cloudapp.azure.com:30619)
+    http_code=$(curl -s -o /dev/null -w "%{http_code}" http://mytpm.eastus.cloudapp.azure.com:30619)
     if [[ "$response" == 100 ]];
         then
             echo "Increment Test Passed"
